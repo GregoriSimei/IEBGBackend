@@ -1,0 +1,53 @@
+name: CI - Node
+
+on:
+  push: 
+    branches:
+      - feature/*
+      - bugfix/*
+      
+  pull_request:
+    branches:
+      - master
+      - feature/*
+      - bugfix/*
+      
+jobs:
+  tests: 
+    name: Test on Node ${{ matrix.node_version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    env:
+      DATABASE_NAME: test
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      
+    strategy:
+      matrix:
+        node_version: ['16']
+        os: [ubuntu-latest]
+        mysql-version: ['4.4']
+        mysql_password: ['root']
+        
+        
+    steps:
+    - name: Git Checkout
+      uses: actions/checkout@v1
+      
+    - name: Use Node.js VERSION ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with: 
+        node-version: ${{ matrix.node-version }}
+      
+    - name: Start MySQL
+      uses: samin/mysql-action@4dd1210f1d6b9c2468adec44066ef4a97b8f07f3
+      with:
+        mysql verion: '8.0'
+        mysql root password: ${{ matrix.mysql_password }}
+        mysql user: 'root'
+        mysql database: 'test'
+      
+    - name: Install dependences and run tests
+      run: |
+        npm install
+        npm install jest
+        npm run test
