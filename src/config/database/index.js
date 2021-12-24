@@ -13,11 +13,4 @@ connection.sync();
 DictionaryLabels.associate(connection.models);
 Dictionary.associate(connection.models);
 
-try {
-    connection.authenticate();
-} catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-}
-
 module.exports = connection;
