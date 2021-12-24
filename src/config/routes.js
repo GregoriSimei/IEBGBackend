@@ -10,6 +10,6 @@ router.get('/', (req, res) => res.json({ funcio: 'nou' }));
 router.post('/dictionary', DictionaryController.store);
 router.get('/dictionary', DictionaryController.getAllOrOne);
 router.post('/dictionary_label/:dictId', DictionaryLabelsController.store);
-router.post('/:table_name', GenericController.save);
+router.post('/generic/:table_name', GenericController.save);
 
 module.exports = router;
