@@ -1,0 +1,52 @@
+name: CI - IEBG - Node - Quality Check
+
+on:
+  push: 
+    branches:
+      - task/*
+      - bugfix/*
+      
+  pull_request:
+    branches:
+      - main
+      - task/*
+      - bugfix/*
+ 
+env:
+  MYSQL_USER: root
+  MYSQL_ROOT_PASSWORD: rootgit123
+  MYSQL_DATABASE: git_actions_db
+  MYSQL_PORT: 3306
+  BACKEND_PORT: 3000
+  PASS_HASH_SALT: 5d8ba383526af097fe0790c53e915a3886ca93ec
+  PASS_HASH_ITERATION: 1000
+  PASS_HASH_TYPE: sha512
+  
+jobs:
+  quality: 
+    name: Test on Node ${{ matrix.node_version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+      
+    strategy:
+      matrix:
+        node_version: ['16']
+        os: [ubuntu-latest]
+        
+        
+    steps:
+    - name: Git Checkout
+      uses: actions/checkout@v1
+      
+    - name: Use Node.js VERSION ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with: 
+        node-version: ${{ matrix.node-version }}
+      
+    - name: Install dependences and run tests
+      run: npm install
+      
+    - name: Run tests
+      run: npm run test
+      
+    - name: Check Lint - code pattern
+      run: npm run lint:check
