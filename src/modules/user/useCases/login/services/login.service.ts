@@ -31,10 +31,11 @@ export class LoginService {
 
     const { secret, expiresIn } = authConfig.jwt;
 
-    const token = await sign(
+    const token = sign(
       {
         id: userExist.id,
         email: userExist.email,
+        role: userExist.role,
       },
       secret,
       {
