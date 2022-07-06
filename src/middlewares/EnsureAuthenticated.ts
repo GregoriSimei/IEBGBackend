@@ -11,6 +11,7 @@ interface ITokenPayload {
   sub: string;
   id: number;
   email: string;
+  role: string;
 }
 
 @Injectable()
@@ -25,13 +26,14 @@ export class EnsureAuthenticated implements NestMiddleware {
     const [, token] = authHeader.split(' ');
 
     try {
-      const decoded = verify(token, authConfig.jwt.secret);
+      const decodedToken = verify(token, authConfig.jwt.secret);
 
-      const { sub, email } = decoded as ITokenPayload;
+      const { sub, email, role } = decodedToken as ITokenPayload;
 
       request.user = {
         id: sub,
         email,
+        role,
       };
 
       return next();
