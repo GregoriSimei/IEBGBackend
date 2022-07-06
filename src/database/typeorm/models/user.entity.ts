@@ -1,4 +1,4 @@
-import { IUser } from 'src/database/models/IUser';
+import { IUser, UserRole } from 'src/database/models/IUser';
 import {
   Column,
   CreateDateColumn,
@@ -17,6 +17,13 @@ export class User implements IUser {
 
   @Column()
   pass: string;
+
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.USER,
+  })
+  role: UserRole;
 
   @CreateDateColumn()
   created_at: Date;

@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDTO } from 'src/modules/user/DTOs/CreateUserDTO';
+import { EnumUserRole } from 'src/modules/user/DTOs/EnumUserRole';
 import { UserDTO } from 'src/modules/user/DTOs/UserDTO';
 import { IUserRepository } from 'src/modules/user/repositories/IUserRepository';
 import { BadRequest } from 'src/shared/DTO/BadRequest';
@@ -21,6 +22,7 @@ export class CreateUserService {
 
     const createdUser = await this.userRepository.create({
       email,
+      role: EnumUserRole.USER,
       pass: passwordHashed,
     });
 
