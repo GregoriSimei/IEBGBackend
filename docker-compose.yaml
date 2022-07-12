@@ -1,17 +1,17 @@
 services:
-  nodejs:
-    container_name: iebg-backend
-    image: node:16
-    env_file:
-      - ./.env
-    ports:
-      - "${BACKEND_PORT}:3000"
-    command: 'npm run start:dev'
-    volumes:
-      - .:/app/node
-    working_dir: /app/node
-    depends_on:
-      - database
+  # nodejs:
+  #   container_name: iebg-backend
+  #   image: node:16
+  #   env_file:
+  #     - ./.env
+  #   ports:
+  #     - "${BACKEND_PORT}:3000"
+  #   command: 'npm run start:dev'
+  #   volumes:
+  #     - .:/app/node
+  #   working_dir: /app/node
+  #   depends_on:
+  #     - database
 
   database:
     container_name: iebg-database
